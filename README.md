@@ -1,3 +1,5 @@
+FR
+
 Pour que tout fonctionne il y'a plusieurs étape :
 
 1. il est conseilé (si vous utilisez NetBeans) d'utiliser un autre maven
