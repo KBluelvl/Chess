@@ -22,7 +22,7 @@ public class FxView extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Chess");
-        URL FxmlLocation = getClass().getResource("../../../Menu.fxml");
+        URL FxmlLocation = getClass().getResource("Menu.fxml");
         FXMLLoader root = new FXMLLoader(FxmlLocation);
         Scene scene = new Scene(root.load());
         stage.setScene(scene);
