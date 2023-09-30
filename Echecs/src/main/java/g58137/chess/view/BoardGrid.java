@@ -75,6 +75,9 @@ public class BoardGrid extends GridPane {
         node.setOnMousePressed(e -> {
             startX = e.getSceneX() - node.getTranslateX();
             startY = e.getSceneY() - node.getTranslateY();
+            if (node.getParent() != null) {
+                node.getParent().toFront(); // Amenez le parent de l'ImageView au premier plan
+            }
         });
         node.setOnMouseDragged(e ->{
             node.setTranslateX(e.getSceneX() - startX);
