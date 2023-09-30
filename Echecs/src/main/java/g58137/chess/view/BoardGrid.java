@@ -118,8 +118,36 @@ public class BoardGrid extends GridPane {
                 } catch (Exception ex){
                     System.out.println(ex.getMessage());
                 }
-            } else if (false) { // DIAG LEFT
-
+            } else if (node.getTranslateX() >= SQUARE_SIZE/1.4545 && node.getTranslateY() > -20 && node.getTranslateY() < 12) { // RIGHT
+                Position newPos = oldPos;
+                double transalationX = node.getTranslateX();
+                int n = 0;
+                while(transalationX >= SQUARE_SIZE/1.4545){
+                    newPos = newPos.next(Direction.E);
+                    transalationX = transalationX - SQUARE_SIZE;
+                    n++;
+                }
+                System.out.println("RIGHT "+n+" CASE");
+                try {
+                    model.movePiecePosition(oldPos, newPos);
+                } catch (Exception ex){
+                    System.out.println(ex.getMessage());
+                }
+            } else if (node.getTranslateX() <= -SQUARE_SIZE/1.4545 && node.getTranslateY() > -20 && node.getTranslateY() < 12) { //LEFT
+                Position newPos = oldPos;
+                double transalationX = node.getTranslateX();
+                int n = 0;
+                while(transalationX <= -SQUARE_SIZE/1.4545){
+                    newPos = newPos.next(Direction.W);
+                    transalationX = transalationX + SQUARE_SIZE;
+                    n++;
+                }
+                System.out.println("LEFT "+n+" CASE");
+                try {
+                    model.movePiecePosition(oldPos, newPos);
+                } catch (Exception ex){
+                    System.out.println(ex.getMessage());
+                }
             }
             displayBackground();
         });
