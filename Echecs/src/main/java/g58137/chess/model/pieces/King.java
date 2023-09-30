@@ -46,6 +46,10 @@ public class King extends Piece {
         return deplacement;
     }
 
+    public String getName(){
+        return color + "King";
+    }
+
     /**
      * vérifie si un roi peut se deplacer dans une direction donnée(par rapport
      * au jeu) et si oui ajoute la position dans la liste.

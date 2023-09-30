@@ -21,6 +21,10 @@ public class Rook extends Piece{
         super(color);
     }
 
+    public String getName(){
+        return color + "Rook";
+    }
+
     /**
      * revoie une liste de toutes les positions des déplacements possible pour
      * une tour en position donnée.

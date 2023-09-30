@@ -21,6 +21,10 @@ public class Queen extends Piece {
         super(color);
     }
 
+    public String getName(){
+        return color + "Queen";
+    }
+
     /**
      * revoie une liste de toutes les positions des déplacements possible pour
      * une reine en position donnée.

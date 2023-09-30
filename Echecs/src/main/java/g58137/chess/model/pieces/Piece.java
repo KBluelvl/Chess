@@ -273,6 +273,8 @@ public abstract class Piece {
         } catch (Exception e) {}
     }
 
+    public abstract String getName();
+
     @Override
     public int hashCode() {
         int hash = 3;

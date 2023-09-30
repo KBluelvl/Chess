@@ -92,4 +92,8 @@ public class FlyingBishop extends Piece {
         }
     }
 
+    public String getName(){
+        return color + "FlyingBishop";
+    }
+
 }

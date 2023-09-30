@@ -88,6 +88,10 @@ public class Knight extends Piece {
         } catch (Exception e) {}
     }
 
+    public String getName(){
+        return color + "Knight";
+    }
+
     @Override
     public String toString() {
         return color == Color.BLACK ? BLACK_BOLD+"♞" : "♞";

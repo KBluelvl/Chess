@@ -68,6 +68,10 @@ public class Pawn extends Piece {
         }
     }
 
+    public String getName(){
+        return color + "Pawn";
+    }
+
     /**
      * renvoie les positions en lesquelles le pion peut capturer une pièce
      * adverse.

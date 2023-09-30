@@ -15,7 +15,7 @@ public class FxView extends Application {
     private TextView textView;
     private Model model;
 
-    public static void exec(String[] args) {
+    public static void main(String[] args) {
         Application.launch(args);
     }
 

@@ -13,7 +13,7 @@ import g58137.chess.view.FxView;
 public class main {
 
     public static void main(String[] args) {
-        FxView.exec(args);
+        FxView.main(args);
         Model game = new Game();
         TextView textView = new TextView(game);
         Controller controller = new Controller(game, textView);

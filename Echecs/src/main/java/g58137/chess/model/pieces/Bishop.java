@@ -21,6 +21,10 @@ public class Bishop extends Piece{
         super(color);
     }
 
+    public String getName(){
+        return color + "Bishop";
+    }
+
     /**
      * revoie une liste de toutes les positions des déplacements possible pour
      * un fou en position donnée.
