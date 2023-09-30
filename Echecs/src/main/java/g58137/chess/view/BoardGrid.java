@@ -1,5 +1,6 @@
 package g58137.chess.view;
 
+import g58137.chess.model.Direction;
 import g58137.chess.model.Game;
 import g58137.chess.model.Model;
 import g58137.chess.model.Position;
@@ -18,6 +19,7 @@ public class BoardGrid extends GridPane {
     private Model model;
     private double startX;
     private double startY;
+    private final double  SQUARE_SIZE = 64;
 
     public BoardGrid() {
         initModel();
@@ -39,7 +41,7 @@ public class BoardGrid extends GridPane {
                     StackPane stackPane = new StackPane();
                     ImageView pieceImageView = new ImageView(getImage(piece.getName()));
                     stackPane.getChildren().addAll(backgroundImageView,pieceImageView);
-                    makeDraggable(pieceImageView);
+                    makeDraggable(pieceImageView, new Position(j,i));
                     this.add(stackPane, i, 7-j);
                 }
             }
@@ -63,7 +65,7 @@ public class BoardGrid extends GridPane {
             case "BLACKKnight" -> str = "img/blackKnight.png";
             case "WHITEKnight"-> str = "img/whiteKnight.png";
         }
-        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(str)),64,64,true,true);
+        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(str)),SQUARE_SIZE,SQUARE_SIZE,true,true);
     }
 
     private void initModel() {
@@ -71,7 +73,7 @@ public class BoardGrid extends GridPane {
         model.start();
     }
 
-    private void makeDraggable(Node node){
+    private void makeDraggable(Node node, Position oldPos){
         node.setOnMousePressed(e -> {
             startX = e.getSceneX() - node.getTranslateX();
             startY = e.getSceneY() - node.getTranslateY();
@@ -82,6 +84,44 @@ public class BoardGrid extends GridPane {
         node.setOnMouseDragged(e ->{
             node.setTranslateX(e.getSceneX() - startX);
             node.setTranslateY(e.getSceneY() - startY);
+            System.out.println("y : "+(node.getTranslateY()));
+            System.out.println("x : "+(node.getTranslateX()));
+        });
+        node.setOnMouseReleased(e ->{
+            if(node.getTranslateY() <= -SQUARE_SIZE/1.1428 && node.getTranslateX() < 24 && node.getTranslateX() > -24) { // UP
+                Position newPos = oldPos;
+                double transalationY = -node.getTranslateY();
+                int n = 0;
+                while(transalationY > SQUARE_SIZE){
+                    newPos = newPos.next(Direction.N);
+                    transalationY = transalationY - SQUARE_SIZE;
+                    n++;
+                }
+                System.out.println("UP "+n+" CASE");
+                try {
+                    model.movePiecePosition(oldPos, newPos);
+                } catch (Exception ex){
+                    System.out.println(ex.getMessage());
+                }
+            } else if (node.getTranslateY() >= SQUARE_SIZE/1.6 && node.getTranslateX() < 24 && node.getTranslateX() > -24) { // DOWN
+                Position newPos = oldPos;
+                double transalationY = node.getTranslateY();
+                int n = 0;
+                while(transalationY >= SQUARE_SIZE/1.6){
+                    newPos = newPos.next(Direction.S);
+                    transalationY = transalationY - SQUARE_SIZE;
+                    n++;
+                }
+                System.out.println("DOWN "+n+" CASE");
+                try {
+                    model.movePiecePosition(oldPos, newPos);
+                } catch (Exception ex){
+                    System.out.println(ex.getMessage());
+                }
+            } else if (false) { // DIAG LEFT
+
+            }
+            displayBackground();
         });
     }
 }
