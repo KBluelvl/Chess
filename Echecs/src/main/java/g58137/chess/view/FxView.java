@@ -23,10 +23,10 @@ public class FxView extends Application {
         Scene scene = new Scene(root.load());
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest(event -> {
+          System.exit(0);
+        });
     }
 
-    @Override
-    public void stop(){
-        System.exit(0);
-    }
 }

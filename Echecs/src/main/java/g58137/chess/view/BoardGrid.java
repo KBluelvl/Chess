@@ -1,16 +1,18 @@
 package g58137.chess.view;
 
-import g58137.chess.model.Direction;
-import g58137.chess.model.Game;
-import g58137.chess.model.Model;
-import g58137.chess.model.Position;
+import g58137.chess.model.*;
 import g58137.chess.model.pieces.Piece;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.Objects;
 
 public class BoardGrid extends GridPane {
@@ -20,8 +22,10 @@ public class BoardGrid extends GridPane {
     private double startX;
     private double startY;
     private final double  SQUARE_SIZE = 64;
+    Stage stage;
 
-    public BoardGrid() {
+    public BoardGrid(Stage stage) {
+        this.stage = stage;
         initModel();
         displayBackground();
     }
@@ -29,20 +33,20 @@ public class BoardGrid extends GridPane {
     private void displayBackground() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if(i % 2 == 0 && j % 2 != 0 || i % 2 != 0 && j % 2 == 0) {
+                if (i % 2 == 0 && j % 2 != 0 || i % 2 != 0 && j % 2 == 0) {
                     backgroundImageView = new ImageView(getImage("bgGreen2"));
-                }else {
+                } else {
                     backgroundImageView = new ImageView(getImage("bgGreen1"));
                 }
-                Piece piece = model.getPiece(new Position(j,i));
-                if(piece == null) {
-                    this.add(backgroundImageView, i, 7-j);
-                } else{
+                Piece piece = model.getPiece(new Position(j, i));
+                if (piece == null) {
+                    this.add(backgroundImageView, i, 7 - j);
+                } else {
                     StackPane stackPane = new StackPane();
                     ImageView pieceImageView = new ImageView(getImage(piece.getName()));
-                    stackPane.getChildren().addAll(backgroundImageView,pieceImageView);
-                    makeDraggable(pieceImageView, new Position(j,i));
-                    this.add(stackPane, i, 7-j);
+                    stackPane.getChildren().addAll(backgroundImageView, pieceImageView);
+                    makeDraggable(pieceImageView, new Position(j, i));
+                    this.add(stackPane, i, 7 - j);
                 }
             }
         }
@@ -81,75 +85,74 @@ public class BoardGrid extends GridPane {
                 node.getParent().toFront(); // Amenez le parent de l'ImageView au premier plan
             }
         });
-        node.setOnMouseDragged(e ->{
+        node.setOnMouseDragged(e -> {
             node.setTranslateX(e.getSceneX() - startX);
             node.setTranslateY(e.getSceneY() - startY);
-            System.out.println("y : "+(node.getTranslateY()));
-            System.out.println("x : "+(node.getTranslateX()));
         });
-        node.setOnMouseReleased(e ->{
-            if(node.getTranslateY() <= -SQUARE_SIZE/1.1428 && node.getTranslateX() < 24 && node.getTranslateX() > -24) { // UP
+        node.setOnMouseReleased(e -> {
+            if (hasMoved(node.getTranslateY(), node.getTranslateX())) {
                 Position newPos = oldPos;
                 double transalationY = -node.getTranslateY();
-                int n = 0;
-                while(transalationY > SQUARE_SIZE){
-                    newPos = newPos.next(Direction.N);
-                    transalationY = transalationY - SQUARE_SIZE;
-                    n++;
-                }
-                System.out.println("UP "+n+" CASE");
-                try {
-                    model.movePiecePosition(oldPos, newPos);
-                } catch (Exception ex){
-                    System.out.println(ex.getMessage());
-                }
-            } else if (node.getTranslateY() >= SQUARE_SIZE/1.6 && node.getTranslateX() < 24 && node.getTranslateX() > -24) { // DOWN
-                Position newPos = oldPos;
-                double transalationY = node.getTranslateY();
-                int n = 0;
-                while(transalationY >= SQUARE_SIZE/1.6){
-                    newPos = newPos.next(Direction.S);
-                    transalationY = transalationY - SQUARE_SIZE;
-                    n++;
-                }
-                System.out.println("DOWN "+n+" CASE");
-                try {
-                    model.movePiecePosition(oldPos, newPos);
-                } catch (Exception ex){
-                    System.out.println(ex.getMessage());
-                }
-            } else if (node.getTranslateX() >= SQUARE_SIZE/1.4545 && node.getTranslateY() > -20 && node.getTranslateY() < 12) { // RIGHT
-                Position newPos = oldPos;
                 double transalationX = node.getTranslateX();
-                int n = 0;
-                while(transalationX >= SQUARE_SIZE/1.4545){
-                    newPos = newPos.next(Direction.E);
-                    transalationX = transalationX - SQUARE_SIZE;
-                    n++;
+                int nv = 0;
+                int nh = 0;
+                String v = "vertical";
+                String h = "horizontal";
+                if (transalationY >= -SQUARE_SIZE / 1.1428) { // UP
+                    while (transalationY >= SQUARE_SIZE / 1.1428) {
+                        newPos = newPos.next(Direction.N);
+                        transalationY = transalationY - SQUARE_SIZE;
+                        nv++;
+                    }
+                    v = "UP";
+                } else if (transalationY <= SQUARE_SIZE / 1.6) { // DOWN
+                    while (transalationY <= -SQUARE_SIZE / 1.6) {
+                        newPos = newPos.next(Direction.S);
+                        transalationY = transalationY + SQUARE_SIZE;
+                        nv++;
+                    }
+                    v = "DOWN";
                 }
-                System.out.println("RIGHT "+n+" CASE");
+                if (transalationX >= SQUARE_SIZE / 1.4545) { // RIGHT
+                    while (transalationX >= SQUARE_SIZE / 1.4545) {
+                        newPos = newPos.next(Direction.E);
+                        transalationX = transalationX - SQUARE_SIZE;
+                        nh++;
+                    }
+                    h = "RIGHT";
+                } else if (transalationX <= -SQUARE_SIZE / 1.4545) { // LEFT
+                    while (transalationX <= -SQUARE_SIZE / 1.4545) {
+                        newPos = newPos.next(Direction.W);
+                        transalationX = transalationX + SQUARE_SIZE;
+                        nh++;
+                    }
+                    h = "LEFT";
+                }
+                System.out.println(v + " " + nv + " CASE");
+                System.out.println(h + " " + nh + " CASE");
                 try {
                     model.movePiecePosition(oldPos, newPos);
-                } catch (Exception ex){
-                    System.out.println(ex.getMessage());
-                }
-            } else if (node.getTranslateX() <= -SQUARE_SIZE/1.4545 && node.getTranslateY() > -20 && node.getTranslateY() < 12) { //LEFT
-                Position newPos = oldPos;
-                double transalationX = node.getTranslateX();
-                int n = 0;
-                while(transalationX <= -SQUARE_SIZE/1.4545){
-                    newPos = newPos.next(Direction.W);
-                    transalationX = transalationX + SQUARE_SIZE;
-                    n++;
-                }
-                System.out.println("LEFT "+n+" CASE");
-                try {
-                    model.movePiecePosition(oldPos, newPos);
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
             }
-            displayBackground();
+            if(model.getState() != GameState.CHECK_MATE && model.getState() != GameState.STALE_MATE) {
+                displayBackground();
+            } else {
+                URL FxmlLocation = getClass().getResource("Result.fxml");
+                FXMLLoader loader = new FXMLLoader(FxmlLocation);
+                try {
+                    Scene scene = new Scene(loader.load());
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
         });
+    }
+
+    private boolean hasMoved(double y,double x){
+        return y <= -SQUARE_SIZE/1.1428 || y >= SQUARE_SIZE/1.6 || x >= SQUARE_SIZE/1.4545 || x <= -SQUARE_SIZE/1.4545;
     }
 }
