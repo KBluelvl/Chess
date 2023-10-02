@@ -1,6 +1,6 @@
 # Chess
 
-1. [FR](#french)
+1. [FR](#français)
 2. [EN](#english)
 
 # Français
