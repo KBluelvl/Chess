@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 import java.net.URL;
@@ -92,48 +93,35 @@ public class BoardGrid extends GridPane {
             node.setOnMouseDragged(e -> {
                 node.setTranslateX(e.getSceneX() - startX);
                 node.setTranslateY(e.getSceneY() - startY);
+                System.out.println("x: "+node.getTranslateX());
             });
             node.setOnMouseReleased(e -> {
-                if (hasMoved(node.getTranslateY(), node.getTranslateX())) {
+                if (hasMoved(-node.getTranslateY(), node.getTranslateX())) {
                     Position newPos = oldPos;
                     double transalationY = -node.getTranslateY();
                     double transalationX = node.getTranslateX();
-                    int nv = 0;
-                    int nh = 0;
-                    String v = "vertical";
-                    String h = "horizontal";
-                    if (transalationY >= -SQUARE_SIZE / 1.1428) { // UP
-                        while (transalationY >= SQUARE_SIZE / 1.1428) {
+                    if (transalationY >= SQUARE_SIZE / 2.0645) { // UP
+                        while (transalationY >= SQUARE_SIZE / 2.0645) {
                             newPos = newPos.next(Direction.N);
                             transalationY = transalationY - SQUARE_SIZE;
-                            nv++;
                         }
-                        v = "UP";
-                    } else if (transalationY <= SQUARE_SIZE / 1.6) { // DOWN
-                        while (transalationY <= -SQUARE_SIZE / 1.6) {
+                    } else if (transalationY <= -SQUARE_SIZE / 2.37037) { // DOWN
+                        while (transalationY <= -SQUARE_SIZE / 2.37037) {
                             newPos = newPos.next(Direction.S);
                             transalationY = transalationY + SQUARE_SIZE;
-                            nv++;
                         }
-                        v = "DOWN";
                     }
-                    if (transalationX >= SQUARE_SIZE / 1.4545) { // RIGHT
-                        while (transalationX >= SQUARE_SIZE / 1.4545) {
+                    if (transalationX >= SQUARE_SIZE / 2.112) { // RIGHT
+                        while (transalationX >= SQUARE_SIZE / 2.112) {
                             newPos = newPos.next(Direction.E);
                             transalationX = transalationX - SQUARE_SIZE;
-                            nh++;
                         }
-                        h = "RIGHT";
                     } else if (transalationX <= -SQUARE_SIZE / 1.4545) { // LEFT
                         while (transalationX <= -SQUARE_SIZE / 1.4545) {
                             newPos = newPos.next(Direction.W);
                             transalationX = transalationX + SQUARE_SIZE;
-                            nh++;
                         }
-                        h = "LEFT";
                     }
-                    System.out.println(v + " " + nv + " CASE");
-                    System.out.println(h + " " + nh + " CASE");
                     try {
                         model.movePiecePosition(oldPos, newPos);
                     } catch (Exception ex) {
@@ -146,6 +134,7 @@ public class BoardGrid extends GridPane {
                     FXMLLoader loader = new FXMLLoader(FxmlLocation);
                     try {
                         Stage secondaryStage = new Stage();
+                        stage.setResizable(false);
                         Scene scene = new Scene(loader.load());
                         secondaryStage.setScene(scene);
                         secondaryStage.show();
@@ -160,6 +149,6 @@ public class BoardGrid extends GridPane {
     }
 
     private boolean hasMoved(double y,double x){
-        return y <= -SQUARE_SIZE/1.1428 || y >= SQUARE_SIZE/1.6 || x >= SQUARE_SIZE/1.4545 || x <= -SQUARE_SIZE/1.4545;
+        return y <= -SQUARE_SIZE/2.37037 || y >= SQUARE_SIZE/2.0645 || x >= SQUARE_SIZE/2.112 || x <= -SQUARE_SIZE/2.112;
     }
 }
