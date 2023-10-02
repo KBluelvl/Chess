@@ -8,7 +8,7 @@
 
 <VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="g58137.chess.view.ResultController">
    <children>
-      <Label alignment="CENTER" prefHeight="231.0" prefWidth="600.0" style="-fx-background-color: #606470; -fx-font-weight: bold;" text="Les ... ont gagné" textFill="WHITE">
+      <Label fx:id="victoryLabel" alignment="CENTER" prefHeight="231.0" prefWidth="600.0" style="-fx-background-color: #606470; -fx-font-weight: bold;" text="Les ... ont gagné" textFill="WHITE">
          <font>
             <Font size="36.0" />
          </font>

@@ -150,7 +150,7 @@ public class BoardGrid extends GridPane {
                         secondaryStage.setScene(scene);
                         secondaryStage.show();
                         ResultController controller = loader.getController();
-                        controller.getPrimaryStage(stage);
+                        controller.getPrimaryStage(stage, model.getCurrentPlayer().toString());
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }

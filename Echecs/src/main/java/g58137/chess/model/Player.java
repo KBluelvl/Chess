@@ -47,6 +47,12 @@ public class Player {
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        if(color == Color.BLACK){
+            return "blancs";
+        }
+        return "noirs";
+    }
 }

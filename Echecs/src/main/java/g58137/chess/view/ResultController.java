@@ -3,6 +3,7 @@ package g58137.chess.view;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -11,10 +12,13 @@ import java.net.URL;
 public class ResultController {
     @FXML
     private VBox root;
+    @FXML
+    private Label victoryLabel;
     private Stage primaryStage;
 
-    public void getPrimaryStage(Stage stage){
+    public void getPrimaryStage(Stage stage,String winnerName){
         this.primaryStage = stage;
+        victoryLabel.setText("Les "+winnerName+" ont gagné !");
     }
 
     public void rematch() {
