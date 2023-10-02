@@ -5,12 +5,15 @@ import g58137.chess.model.pieces.Piece;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 
 import java.net.URL;
 import java.util.Objects;
@@ -78,78 +81,82 @@ public class BoardGrid extends GridPane {
     }
 
     private void makeDraggable(Node node, Position oldPos){
-        node.setOnMousePressed(e -> {
-            startX = e.getSceneX() - node.getTranslateX();
-            startY = e.getSceneY() - node.getTranslateY();
-            if (node.getParent() != null) {
-                node.getParent().toFront(); // Amenez le parent de l'ImageView au premier plan
-            }
-        });
-        node.setOnMouseDragged(e -> {
-            node.setTranslateX(e.getSceneX() - startX);
-            node.setTranslateY(e.getSceneY() - startY);
-        });
-        node.setOnMouseReleased(e -> {
-            if (hasMoved(node.getTranslateY(), node.getTranslateX())) {
-                Position newPos = oldPos;
-                double transalationY = -node.getTranslateY();
-                double transalationX = node.getTranslateX();
-                int nv = 0;
-                int nh = 0;
-                String v = "vertical";
-                String h = "horizontal";
-                if (transalationY >= -SQUARE_SIZE / 1.1428) { // UP
-                    while (transalationY >= SQUARE_SIZE / 1.1428) {
-                        newPos = newPos.next(Direction.N);
-                        transalationY = transalationY - SQUARE_SIZE;
-                        nv++;
-                    }
-                    v = "UP";
-                } else if (transalationY <= SQUARE_SIZE / 1.6) { // DOWN
-                    while (transalationY <= -SQUARE_SIZE / 1.6) {
-                        newPos = newPos.next(Direction.S);
-                        transalationY = transalationY + SQUARE_SIZE;
-                        nv++;
-                    }
-                    v = "DOWN";
+        if(model.getState() != GameState.CHECK_MATE && model.getState() != GameState.STALE_MATE) {
+            node.setOnMousePressed(e -> {
+                startX = e.getSceneX() - node.getTranslateX();
+                startY = e.getSceneY() - node.getTranslateY();
+                if (node.getParent() != null) {
+                    node.getParent().toFront(); // Amenez le parent de l'ImageView au premier plan
                 }
-                if (transalationX >= SQUARE_SIZE / 1.4545) { // RIGHT
-                    while (transalationX >= SQUARE_SIZE / 1.4545) {
-                        newPos = newPos.next(Direction.E);
-                        transalationX = transalationX - SQUARE_SIZE;
-                        nh++;
+            });
+            node.setOnMouseDragged(e -> {
+                node.setTranslateX(e.getSceneX() - startX);
+                node.setTranslateY(e.getSceneY() - startY);
+            });
+            node.setOnMouseReleased(e -> {
+                if (hasMoved(node.getTranslateY(), node.getTranslateX())) {
+                    Position newPos = oldPos;
+                    double transalationY = -node.getTranslateY();
+                    double transalationX = node.getTranslateX();
+                    int nv = 0;
+                    int nh = 0;
+                    String v = "vertical";
+                    String h = "horizontal";
+                    if (transalationY >= -SQUARE_SIZE / 1.1428) { // UP
+                        while (transalationY >= SQUARE_SIZE / 1.1428) {
+                            newPos = newPos.next(Direction.N);
+                            transalationY = transalationY - SQUARE_SIZE;
+                            nv++;
+                        }
+                        v = "UP";
+                    } else if (transalationY <= SQUARE_SIZE / 1.6) { // DOWN
+                        while (transalationY <= -SQUARE_SIZE / 1.6) {
+                            newPos = newPos.next(Direction.S);
+                            transalationY = transalationY + SQUARE_SIZE;
+                            nv++;
+                        }
+                        v = "DOWN";
                     }
-                    h = "RIGHT";
-                } else if (transalationX <= -SQUARE_SIZE / 1.4545) { // LEFT
-                    while (transalationX <= -SQUARE_SIZE / 1.4545) {
-                        newPos = newPos.next(Direction.W);
-                        transalationX = transalationX + SQUARE_SIZE;
-                        nh++;
+                    if (transalationX >= SQUARE_SIZE / 1.4545) { // RIGHT
+                        while (transalationX >= SQUARE_SIZE / 1.4545) {
+                            newPos = newPos.next(Direction.E);
+                            transalationX = transalationX - SQUARE_SIZE;
+                            nh++;
+                        }
+                        h = "RIGHT";
+                    } else if (transalationX <= -SQUARE_SIZE / 1.4545) { // LEFT
+                        while (transalationX <= -SQUARE_SIZE / 1.4545) {
+                            newPos = newPos.next(Direction.W);
+                            transalationX = transalationX + SQUARE_SIZE;
+                            nh++;
+                        }
+                        h = "LEFT";
                     }
-                    h = "LEFT";
+                    System.out.println(v + " " + nv + " CASE");
+                    System.out.println(h + " " + nh + " CASE");
+                    try {
+                        model.movePiecePosition(oldPos, newPos);
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                    }
                 }
-                System.out.println(v + " " + nv + " CASE");
-                System.out.println(h + " " + nh + " CASE");
-                try {
-                    model.movePiecePosition(oldPos, newPos);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-            if(model.getState() != GameState.CHECK_MATE && model.getState() != GameState.STALE_MATE) {
                 displayBackground();
-            } else {
-                URL FxmlLocation = getClass().getResource("Result.fxml");
-                FXMLLoader loader = new FXMLLoader(FxmlLocation);
-                try {
-                    Scene scene = new Scene(loader.load());
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                if (model.getState() == GameState.CHECK_MATE || model.getState() == GameState.STALE_MATE) {
+                    URL FxmlLocation = getClass().getResource("Result.fxml");
+                    FXMLLoader loader = new FXMLLoader(FxmlLocation);
+                    try {
+                        Stage secondaryStage = new Stage();
+                        Scene scene = new Scene(loader.load());
+                        secondaryStage.setScene(scene);
+                        secondaryStage.show();
+                        ResultController controller = loader.getController();
+                        controller.getPrimaryStage(stage);
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private boolean hasMoved(double y,double x){
