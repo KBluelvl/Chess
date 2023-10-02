@@ -3,7 +3,7 @@
 1. [FR](#french)
 2. [EN](#english)
 
-# FR
+# Français
 Ce projet était à l'origine pour mon cours de développement. Je devais faire un jeu d'échecs basique en console. J'ai continué le projet pour y rajouter une vue JavaFX. 
 
 ## Comment sa fonctionne ?
@@ -23,7 +23,7 @@ Lien : https://stackoverflow.com/questions/53257763/netbeans-9-print-unicode-cha
 3. Optionnel. Vous pouvez aussi agrandir la taille de la police de l'output
 pour une meilleur visibilité.
 
-#  EN
+#  English
 This project was originally for my development course. I had to make a basic chess game on console. I continued the project to add a JavaFX view.
 
 ## How it work ?
