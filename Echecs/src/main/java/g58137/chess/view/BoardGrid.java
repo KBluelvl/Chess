@@ -93,7 +93,7 @@ public class BoardGrid extends GridPane {
             node.setOnMouseDragged(e -> {
                 node.setTranslateX(e.getSceneX() - startX);
                 node.setTranslateY(e.getSceneY() - startY);
-                System.out.println("x: "+node.getTranslateX());
+                //stage.getScene().setCursor(Cu);
             });
             node.setOnMouseReleased(e -> {
                 if (hasMoved(-node.getTranslateY(), node.getTranslateX())) {
