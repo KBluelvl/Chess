@@ -2,6 +2,7 @@
 
 1. [FR](#français)
 2. [EN](#english)
+3. [SCREENSHOTS](#screenshots)
 
 # Français
 Ce projet était à l'origine pour mon cours de développement. Je devais faire un jeu d'échecs basique en console. J'ai continué le projet pour y rajouter une vue JavaFX. 
@@ -41,3 +42,6 @@ To make everything work, there are several steps:
 
 3. Optional: You can also increase the font size of the output for better visibility.
     
+# Screenshots
+<img src="https://github.com/KBluelvl/Chess/blob/main/img/Menu.PNG" height="206"> <img src="https://github.com/KBluelvl/Chess/blob/main/img/Game.PNG" height="206">
+<img src="https://github.com/KBluelvl/Chess/blob/main/img/Game2.PNG" height="206"><img src="https://github.com/KBluelvl/Chess/blob/main/img/Result.PNG" height="206">
