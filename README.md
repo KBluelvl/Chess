@@ -1,8 +1,7 @@
 # Chess
 
-1. [FR](FR)
-2. [EN](EN)
-
+1. [FR](#french)
+2. [EN](#english)
 
 # FR
 Ce projet était à l'origine pour mon cours de développement. Je devais faire un jeu d'échecs basique en console. J'ai continué le projet pour y rajouter une vue JavaFX. 
