@@ -3,6 +3,7 @@ package g58137.chess.view;
 import g58137.chess.model.*;
 import g58137.chess.model.pieces.Piece;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
@@ -83,6 +84,9 @@ public class BoardGrid extends GridPane {
 
     private void makeDraggable(Node node, Position oldPos){
         if(model.getState() != GameState.CHECK_MATE && model.getState() != GameState.STALE_MATE) {
+            node.setOnMouseEntered(e -> {
+                node.setCursor(Cursor.CLOSED_HAND);
+            });
             node.setOnMousePressed(e -> {
                 startX = e.getSceneX() - node.getTranslateX();
                 startY = e.getSceneY() - node.getTranslateY();
@@ -93,9 +97,10 @@ public class BoardGrid extends GridPane {
             node.setOnMouseDragged(e -> {
                 node.setTranslateX(e.getSceneX() - startX);
                 node.setTranslateY(e.getSceneY() - startY);
-                //stage.getScene().setCursor(Cu);
+                stage.getScene().setCursor(Cursor.CLOSED_HAND);
             });
             node.setOnMouseReleased(e -> {
+                stage.getScene().setCursor(Cursor.DEFAULT);
                 if (hasMoved(-node.getTranslateY(), node.getTranslateX())) {
                     Position newPos = oldPos;
                     double transalationY = -node.getTranslateY();
