@@ -11,7 +11,7 @@ Ce projet était à l'origine pour mon cours de développement. Je devais faire 
 Il suffit d'ouvrir le projet dans n'importe quel IDE ou console et de lancer `main.java`.
 
 ### Si vous utilisez NetBeans
-Pour que tout fonctionne il y'a plusieurs étape :
+Pour que tout fonctionne en console il y'a plusieurs étape :
 
 1. il est conseilé d'utiliser un autre maven
 pour avoir les couleurs dans l'output. Par exemple : apache-maven-3.3.9.<br>
@@ -32,7 +32,7 @@ This project was originally for my development course. I had to make a basic che
 Just open the project in any IDE or console and run `main.java`.
 
 ### Netbeans users
-To make everything work, there are several steps:
+To make everything work on console, there are several steps:
 
 1. It is recommended to use a different Maven version to have colors in the output. For example: apache-maven-3.3.9.<br>
    Link: https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/
