@@ -37,7 +37,7 @@ To make everything work on console, there are several steps:
 1. It is recommended to use a different Maven version to have colors in the output. For example: apache-maven-3.3.9.<br>
    Link: https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/
 
-2. Add **-J-Dfile.encoding=UTF-8 to the netbeans_default_options** property in the etc/netbeans.conf file and restart NetBeans.<br>
+2. Add **-J-Dfile.encoding=UTF-8 to the netbeans_default_options** property in the **etc/netbeans.conf** file and restart NetBeans.<br>
    Link: https://stackoverflow.com/questions/53257763/netbeans-9-print-unicode-characters
 
 3. Optional: You can also increase the font size of the output for better visibility.
