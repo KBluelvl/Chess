@@ -9,7 +9,8 @@ import java.util.List;
  * @author Florian
  */
 public class Pawn extends Piece {
-    public static final String BLACK_BOLD = "\033[1;30m";
+    private static final String BLACK_BOLD = "\033[1;30m";
+    private boolean enPassant;
 
     /**
      * fait appel au constructeur de la classe parent pour initialiser un pion
@@ -66,6 +67,51 @@ public class Pawn extends Piece {
             }
             
         }
+    }
+
+    /**
+     * Vérifie si la piece peut avancer d'une ou deux cases et si oui ajoute la
+     * position dans une liste donnée.
+     *
+     * @param board = le plateau de jeu donnée.
+     * @param position = la position donnée.
+     * @param mouvement = la direction du mouvement
+     * @param deplacement = liste des deplacement possible.
+     */
+    private void peutAvancer(Board board, Position position, Direction mouvement, List<Position> deplacement) {
+        Position pos = position.next(mouvement);
+        // peut avancer d'une case ?
+        if (isEmptyPosition(board, pos)) {
+            deplacement.add(pos);
+            // peut avancer de deux cases ?
+            if (board.getInitialPawnRow(color).equals(position.getRow())) {
+                pos = pos.next(mouvement);
+                if (isEmptyPosition(board,pos)) {
+                    deplacement.add(pos);
+                    // en passant
+                    canEnPassant(board,position,pos,deplacement);
+                }
+            }
+        }
+    }
+
+    private void canEnPassant(Board board, Position position,Position pos,List<Position> deplacement){
+        String color = getColor() == Color.BLACK ? "WHITE": "BLACK";
+        try {
+            Pawn pawnPassed = (Pawn) board.getPiece(pos.next(Direction.S));
+            if (pawnPassed.getName().equals(color + "Pawn") && pawnPassed.enPassant) {
+                if(board.isFree(pos.next(Direction.W))){
+                    deplacement.add(pos.next(Direction.W));
+                }
+            }
+        } catch (Exception e){
+
+        }
+
+    }
+
+    public void setEnPassant(boolean enPassant) {
+        this.enPassant = enPassant;
     }
 
     public String getName(){

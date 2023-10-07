@@ -186,9 +186,11 @@ public class Game implements Model {
         Piece piece = getPiece(oldPos);
         board.setPiece(piece, newPos);
         board.dropPiece(oldPos);
-        
+
+
+        enPassant(piece,oldPos,newPos);
         promotion(newPos);
-        
+
         state = GameState.PLAY;
         
         if (échec()) {
@@ -202,7 +204,7 @@ public class Game implements Model {
         currentPlayer = getOppositePlayer();
     }
 
-    public void promotion(Position newPos) {
+    private void promotion(Position newPos) {
         Piece piece = getPiece(newPos);
         if ("♟".equals(piece.toString())) {
             if (newPos.getRow() == 0) {
@@ -215,7 +217,19 @@ public class Game implements Model {
         }
     }
     
-    
+    private void enPassant(Piece piece,Position oldPos, Position newPos){
+        try{
+            Pawn pawn = (Pawn) piece;
+            if (pawn.getColor() == Color.WHITE && oldPos.next(Direction.N).next(Direction.N).equals(newPos)
+                    || pawn.getColor() == Color.BLACK && oldPos.next(Direction.S).next(Direction.S).equals(newPos)){
+                pawn.setEnPassant(true);
+            } else{
+                pawn.setEnPassant(false);
+            }
+        } catch (Exception e) {
+
+        }
+    }
 
     protected Board getBoard() {
         return board;

@@ -41,13 +41,12 @@ public class Position {
      * @return la nouvelle position.
      */
     public Position next(Direction dir){
-        
         int aRow= this.row;
         int aColumn = this.column;
         int rowDir = dir.getDeltaRow();
         int columnDir = dir.getDeltaColumn();
         
-        return new Position (aRow + rowDir, aColumn + columnDir) ;
+        return new Position (aRow + rowDir, aColumn + columnDir);
     }
 
     @Override

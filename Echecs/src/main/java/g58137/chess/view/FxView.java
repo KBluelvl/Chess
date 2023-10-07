@@ -1,6 +1,5 @@
 package g58137.chess.view;
 
-import g58137.chess.model.Model;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,8 +18,8 @@ public class FxView extends Application {
     public void start(Stage stage) throws Exception {
         stage.setTitle("Chess");
         stage.setResizable(false);
-        URL FxmlLocation = getClass().getResource("Menu.fxml");
-        FXMLLoader root = new FXMLLoader(FxmlLocation);
+        URL fxmlLocation = getClass().getResource("Menu.fxml");
+        FXMLLoader root = new FXMLLoader(fxmlLocation);
         Scene scene = new Scene(root.load());
         stage.setScene(scene);
         stage.show();

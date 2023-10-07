@@ -73,30 +73,6 @@ public abstract class Piece {
     }
 
     /**
-     * Vérifie si la piece peut avancer d'une ou deux cases et si oui ajoute la
-     * position dans une liste donnée.
-     *
-     * @param board = le plateau de jeu donnée.
-     * @param position = la position donnée.
-     * @param mouvement = la direction du mouvement
-     * @param deplacement = liste des deplacement possible.
-     */
-    protected void peutAvancer(Board board, Position position, Direction mouvement, List<Position> deplacement) {
-        Position pos = position.next(mouvement);
-        // peut avancer d'une case ?
-        if (isEmptyPosition(board, pos)) {
-            deplacement.add(pos);
-            // peut avancer de deux cases ?
-            if (board.getInitialPawnRow(color).equals(position.getRow())) {
-                pos = pos.next(mouvement);
-                if (isEmptyPosition(board, pos)) {
-                    deplacement.add(pos);
-                }
-            }
-        }
-    }
-
-    /**
      * Vérifie si la position donnée est dans le plateau et qu'aucune piece
      * n'occupe cette position.
      *
