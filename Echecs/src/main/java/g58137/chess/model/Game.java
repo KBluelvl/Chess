@@ -17,6 +17,7 @@ public class Game implements Model {
     private King whiteKing; // le roi blanc
     private King blackKing; // le roi noir
     private GameState state; // l'état du jeu.
+    private  Position pawnEnPassant; // The pawn en passant
 
     /**
      * Constructeur Game : Qui crée un nouveau joueur blanc, un nouveau joueur
@@ -187,7 +188,6 @@ public class Game implements Model {
         board.setPiece(piece, newPos);
         board.dropPiece(oldPos);
 
-
         enPassant(piece,oldPos,newPos);
         promotion(newPos);
 
@@ -219,12 +219,15 @@ public class Game implements Model {
     
     private void enPassant(Piece piece,Position oldPos, Position newPos){
         try{
+            Pawn p = (Pawn) board.getPiece(pawnEnPassant);
+            p.setEnPassant(false);
+        } catch (Exception e){}
+        try{
             Pawn pawn = (Pawn) piece;
             if (pawn.getColor() == Color.WHITE && oldPos.next(Direction.N).next(Direction.N).equals(newPos)
                     || pawn.getColor() == Color.BLACK && oldPos.next(Direction.S).next(Direction.S).equals(newPos)){
                 pawn.setEnPassant(true);
-            } else{
-                pawn.setEnPassant(false);
+                pawnEnPassant = newPos;
             }
             if (pawn.getColor() == Color.WHITE && oldPos.next(Direction.N).next(Direction.E).equals(newPos)
                     || oldPos.next(Direction.N).next(Direction.W).equals(newPos)){
