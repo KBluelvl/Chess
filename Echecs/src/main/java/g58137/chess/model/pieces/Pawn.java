@@ -88,26 +88,29 @@ public class Pawn extends Piece {
                 pos = pos.next(mouvement);
                 if (isEmptyPosition(board,pos)) {
                     deplacement.add(pos);
-                    // en passant
-                    canEnPassant(board,position,pos,deplacement);
                 }
             }
         }
+        // en passant
+        canEnPassant(board,position,deplacement,mouvement);
     }
 
-    private void canEnPassant(Board board, Position position,Position pos,List<Position> deplacement){
+    private void canEnPassant(Board board, Position position,List<Position> deplacement,Direction mouvement){
         String color = getColor() == Color.BLACK ? "WHITE": "BLACK";
         try {
-            Pawn pawnPassed = (Pawn) board.getPiece(pos.next(Direction.S));
-            if (pawnPassed.getName().equals(color + "Pawn") && pawnPassed.enPassant) {
-                if(board.isFree(pos.next(Direction.W))){
-                    deplacement.add(pos.next(Direction.W));
-                }
+            Pawn pawnPassedWest = (Pawn) board.getPiece(position.next(Direction.W));
+            if (pawnPassedWest.getName().equals(color + "Pawn") && pawnPassedWest.enPassant
+                    && board.isFree(position.next(Direction.W).next(mouvement))) {
+                deplacement.add(position.next(Direction.W).next(mouvement));
             }
-        } catch (Exception e){
-
-        }
-
+        } catch (Exception e) {}
+        try {
+            Pawn pawnPassedEast = (Pawn) board.getPiece(position.next(Direction.E));
+            if (pawnPassedEast.getName().equals(color + "Pawn") && pawnPassedEast.enPassant
+                    && board.isFree(position.next(Direction.E).next(mouvement))) {
+                deplacement.add(position.next(Direction.E).next(mouvement));
+            }
+        } catch (Exception e) {}
     }
 
     public void setEnPassant(boolean enPassant) {

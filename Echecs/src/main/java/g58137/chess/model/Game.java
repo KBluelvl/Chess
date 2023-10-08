@@ -226,9 +226,14 @@ public class Game implements Model {
             } else{
                 pawn.setEnPassant(false);
             }
-        } catch (Exception e) {
-
-        }
+            if (pawn.getColor() == Color.WHITE && oldPos.next(Direction.N).next(Direction.E).equals(newPos)
+                    || oldPos.next(Direction.N).next(Direction.W).equals(newPos)){
+                board.dropPiece(newPos.next(Direction.S));
+            } else if (pawn.getColor() == Color.BLACK && oldPos.next(Direction.S).next(Direction.E).equals(newPos)
+                    || oldPos.next(Direction.S).next(Direction.W).equals(newPos)) {
+                board.dropPiece(newPos.next(Direction.N));
+            }
+        } catch (Exception e) {}
     }
 
     protected Board getBoard() {
