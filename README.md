@@ -45,3 +45,4 @@ To make everything work on console, there are several steps:
 # Screenshots
 <img src="https://github.com/KBluelvl/Chess/blob/main/img/Menu.PNG" height="206"> <img src="https://github.com/KBluelvl/Chess/blob/main/img/Game.PNG" height="206">
 <img src="https://github.com/KBluelvl/Chess/blob/main/img/Game2.PNG" height="206"><img src="https://github.com/KBluelvl/Chess/blob/main/img/Result.PNG" height="206">
+<img src="https://github.com/KBluelvl/Chess/blob/main/img/Console.PNG" height="206">
