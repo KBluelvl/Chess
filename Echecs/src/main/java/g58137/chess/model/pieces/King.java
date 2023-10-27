@@ -33,7 +33,6 @@ public class King extends Piece {
     @Override
     public List<Position> getPossibleMoves(Position position, Board board) {
         List<Position> deplacement = new ArrayList();
-
         kingMove(board, position, Direction.E, deplacement);
         kingMove(board, position, Direction.N, deplacement);
         kingMove(board, position, Direction.NE, deplacement);
@@ -42,7 +41,6 @@ public class King extends Piece {
         kingMove(board, position, Direction.SE, deplacement);
         kingMove(board, position, Direction.SW, deplacement);
         kingMove(board, position, Direction.W, deplacement);
-
         return deplacement;
     }
 
@@ -68,7 +66,22 @@ public class King extends Piece {
             if (this.color != board.getPiece(pos).color){
                 deplacement.add(pos);
             }
+            if(getInitialKingRow(color).equals(position.getRow()) &&
+                    (dir == Direction.E  || dir == Direction.W) &&
+                    board.getPiece(pos) == null && board.getPiece(pos.next(dir)) == null){
+                deplacement.add(pos.next(dir));
+            }
         } catch (Exception e) {}
+    }
+
+    /**
+     * renvoie 7 pour la couleur BLACK et 0 pour la couleur WHITE.
+     *
+     * @param color = couleur donnée.
+     * @return 7 pour la couleur BLACK et 0 pour la couleur WHITE.
+     */
+    public Integer getInitialKingRow(Color color) {
+        return color == Color.BLACK ? 7 : 0;
     }
 
     @Override
