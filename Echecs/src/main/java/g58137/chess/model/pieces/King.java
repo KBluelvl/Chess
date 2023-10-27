@@ -62,14 +62,16 @@ public class King extends Piece {
         try {
             if (board.isFree(pos)) {
                 deplacement.add(pos);
-            }
-            if (this.color != board.getPiece(pos).color){
+            } else if (this.color != board.getPiece(pos).color){
                 deplacement.add(pos);
             }
             if(getInitialKingRow(color).equals(position.getRow()) &&
-                    (dir == Direction.E  || dir == Direction.W) &&
-                    board.getPiece(pos) == null && board.getPiece(pos.next(dir)) == null){
-                deplacement.add(pos.next(dir));
+                board.getPiece(pos) == null && board.getPiece(pos.next(dir)) == null){
+                if(dir == Direction.E){
+                    deplacement.add(pos.next(dir));
+                } else if (dir == Direction.W && board.getPiece(pos.next(dir).next(dir)) == null) {
+                    deplacement.add(pos.next(dir));
+                }
             }
         } catch (Exception e) {}
     }

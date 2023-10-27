@@ -190,6 +190,7 @@ public class Game implements Model {
 
         enPassant(piece,oldPos,newPos);
         promotion(newPos);
+        roque(piece,oldPos,newPos);
 
         state = GameState.PLAY;
         
@@ -202,6 +203,21 @@ public class Game implements Model {
             state = GameState.STALE_MATE;
         }
         currentPlayer = getOppositePlayer();
+    }
+
+    private void roque(Piece piece,Position oldPos, Position newPos){
+        try {
+            King king = (King) piece;
+            if(oldPos.next(Direction.E).next(Direction.E).equals(newPos)){
+                Rook rook = (Rook) getPiece(newPos.next(Direction.E));
+                board.setPiece(rook,oldPos.next(Direction.E));
+                board.dropPiece(newPos.next(Direction.E));
+            } else if (oldPos.next(Direction.W).next(Direction.W).equals(newPos)) {
+                Rook rook = (Rook) getPiece(newPos.next(Direction.W).next(Direction.W));
+                board.setPiece(rook,oldPos.next(Direction.W));
+                board.dropPiece(newPos.next(Direction.W).next(Direction.W));
+            }
+        } catch (Exception e){}
     }
 
     private void promotion(Position newPos) {
