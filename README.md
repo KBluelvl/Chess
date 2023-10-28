@@ -5,7 +5,7 @@
 3. [SCREENSHOTS](#screenshots)
 
 # Français
-Ce projet était à l'origine pour mon cours de développement. Je devais faire un jeu d'échecs basique en console. J'ai continué le projet pour y rajouter une vue JavaFX. 
+Ce projet était à l'origine pour mon cours de développement. Je devais faire un jeu d'échecs basique en **console**. J'ai continué le projet pour y rajouter une vue **JavaFX** et implémenter les coups avançés comme le **roque** ou encore le **"en passant"**. 
 
 ## Comment sa fonctionne ?
 Il suffit d'ouvrir le projet dans n'importe quel IDE ou console et de lancer `main.java`.
@@ -25,7 +25,7 @@ Lien : https://stackoverflow.com/questions/53257763/netbeans-9-print-unicode-cha
 pour une meilleur visibilité.
 
 #  English
-This project was originally for my development course. I had to make a basic chess game on console. I continued the project to add a JavaFX view.
+This project was originally for my development course. I had to make a basic chess game on **console**. I continued the project to add a JavaFX view and implement the advanced move such as the **roque** and the **en passant**.
 
 ## How it work ?
 
