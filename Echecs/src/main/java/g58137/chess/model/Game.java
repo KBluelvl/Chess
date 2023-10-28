@@ -207,15 +207,16 @@ public class Game implements Model {
 
     private void roque(Piece piece,Position oldPos, Position newPos){
         try {
-            King king = (King) piece;
-            if(oldPos.next(Direction.E).next(Direction.E).equals(newPos)){
-                Rook rook = (Rook) getPiece(newPos.next(Direction.E));
-                board.setPiece(rook,oldPos.next(Direction.E));
-                board.dropPiece(newPos.next(Direction.E));
-            } else if (oldPos.next(Direction.W).next(Direction.W).equals(newPos)) {
-                Rook rook = (Rook) getPiece(newPos.next(Direction.W).next(Direction.W));
-                board.setPiece(rook,oldPos.next(Direction.W));
-                board.dropPiece(newPos.next(Direction.W).next(Direction.W));
+            if(piece.getName().toLowerCase().contains("king")) {
+                if (oldPos.next(Direction.E).next(Direction.E).equals(newPos)) {
+                    Rook rook = (Rook) getPiece(newPos.next(Direction.E));
+                    board.setPiece(rook, oldPos.next(Direction.E));
+                    board.dropPiece(newPos.next(Direction.E));
+                } else if (oldPos.next(Direction.W).next(Direction.W).equals(newPos)) {
+                    Rook rook = (Rook) getPiece(newPos.next(Direction.W).next(Direction.W));
+                    board.setPiece(rook, oldPos.next(Direction.W));
+                    board.dropPiece(newPos.next(Direction.W).next(Direction.W));
+                }
             }
         } catch (Exception e){}
     }

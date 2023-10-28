@@ -95,6 +95,13 @@ public class Pawn extends Piece {
         canEnPassant(board,position,deplacement,mouvement);
     }
 
+    /**
+     * Regarde si le pion peut faire un "en passant" si oui ajoute le déplacement dans la liste de déplaçement
+     * @param board le plateau de jeu
+     * @param position la position donnée
+     * @param deplacement la liste de déplacement possible
+     * @param mouvement la direction donnée
+     */
     private void canEnPassant(Board board, Position position,List<Position> deplacement,Direction mouvement){
         String color = getColor() == Color.BLACK ? "WHITE": "BLACK";
         try {
